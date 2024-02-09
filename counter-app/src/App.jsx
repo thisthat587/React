@@ -6,10 +6,11 @@ function App() {
     // this is hook and is used to update UI in pages, whenever the variable state (value) is changed the UI gets updated adn setter function is responsible for that
 
     const addValue = () => {
-        counter = counter + 1;
-        if (counter > 20) counter = 20;
+        // if (prevCounter > 20) prevCounter = 20;
         console.log(counter, Math.random());
-        setCounter(counter)
+        setCounter(prevCounter => prevCounter + 1)
+        setCounter(prevCounter => prevCounter + 1)
+        setCounter(prevCounter => prevCounter + 1)
     }
 
     const removeValue = () => {
