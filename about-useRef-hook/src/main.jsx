@@ -11,10 +11,12 @@ function App () {
 
   const getNumBox = () => {
     console.log(inputOne.current);
+    // useRef return object as value
   }
 
   const getTextBox = () => {
     console.log(inputTwo.current);
+    // useRef return object as value
   }
 
 
@@ -38,7 +40,7 @@ function App () {
           }}
         />
       </div>
-      <br /><br />
+      <h2>Value: {value}</h2>
       <div>
         <button
           onClick={() => {
