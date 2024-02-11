@@ -1,5 +1,5 @@
 {
     "livePreview.defaultPreviewPath": "/customReact/index.html",
-    "indentRainbow.errorColor": "rgba(100, 20, 20, 0.9);",
-    "indentRainbow.tabmixColor": "rgba(100, 20, 20, 0.9);"
+    "indentRainbow.errorColor": "rgba(128,32,32,0.6)",
+    "indentRainbow.tabmixColor": "rgba(128,32,32,0.6)"
 }
