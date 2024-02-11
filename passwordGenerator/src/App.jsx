@@ -1,3 +1,17 @@
+
+/*
+Learnt to build a password generator application in React in an optimized way 
+using some hooks like useState, useCallback, useRef, useEffect.
+
+- It comes with the options to specify the length of password and to include numbers and special characters.
+- And it also let the generated password to copy on the clipboard.
+
+All thanks to the video in the link below from #chaiaurcode youtube channel.
+
+https://www.youtube.com/watch?v=Lt4vy8hfc-s&list=PLu71SKxNbfoDqgPchmvIsL4hTnJIrtige&index=10
+
+(@hitesh choudhary)
+*/
 import { useState, useCallback, useEffect, useRef } from 'react'
 
 function App () {
@@ -21,7 +35,7 @@ function App () {
             pass += str.charAt(charPos);
         }
 
-        setPassword(pass);
+        setPassword(pass); r
 
     }, [length, isNumberAllowed, isCharacterAllowed, setPassword])
 
@@ -29,7 +43,7 @@ function App () {
 
     const copyPasswordToClipboard = () => {
         passwordRef.current?.select();
-        passwordRef.current?.setSelectionRange(0,100);
+        passwordRef.current?.setSelectionRange(0, 100);
         window.navigator.clipboard.writeText(password);
     }
 

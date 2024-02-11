@@ -11,11 +11,14 @@ function App () {
 
   const getNumBox = () => {
     console.log(inputOne.current);
+    inputOne.current.style.width = "50%"
     // useRef return object as value
+    // useRef use hta h reference pass karne k liye kisi element ka taaki us reference se us element pe manipulation kiya ja ske.
   }
-
+  
   const getTextBox = () => {
     console.log(inputTwo.current);
+    inputTwo.current.style.width = "50%"
     // useRef return object as value
   }
 
