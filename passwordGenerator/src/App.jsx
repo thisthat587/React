@@ -35,7 +35,7 @@ function App () {
             pass += str.charAt(charPos);
         }
 
-        setPassword(pass); r
+        setPassword(pass); 
 
     }, [length, isNumberAllowed, isCharacterAllowed, setPassword])
 
