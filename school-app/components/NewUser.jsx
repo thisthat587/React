@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowRight } from 'lucide-react'
-import '../src/App.css'
+import CreateUserID from "./CreateUserID";
 function NewUser () {
 
-    const [fetchData, setFetchData] = useState(false);
+    const [renderStudentList, setrenderStudentList] = useState(false);
     //Jab mobileno. lene ke bad buttton pe click hota h to ye state change krta h aur is se UI update hota h aur list render kr deta h UI pe student ka
     const mobile = useRef(null);
     const [data, setData] = useState([]); //data m wo value ja raha h jo api se fetch hua h.
     let matchedData = []; //matchedData m value refine hoke ja rha h agar mobile no.match hua to.
-    
+    const [admnoToCreateId, setAdmnoToCreateId] = useState(' ');
+
     const getData = async () => {
-    // 
+        // 
         try {
             const response = await fetch('http://localhost:8081/studentList');
             const result = await response.json();
@@ -25,7 +26,15 @@ function NewUser () {
         getData();
     }, []);
 
-    if (fetchData) {
+    // function createUser (admnoToCreateId) {
+    // }
+    if (admnoToCreateId !== ' ') {
+        return (
+            CreateUserID(admnoToCreateId)
+        )
+    }
+
+    if (renderStudentList) {
 
         const mobileValue = mobile.current.value;
 
@@ -97,10 +106,13 @@ function NewUser () {
                                     <td className="   py-3.5 border items-center ml-2 font-bold text-lg text-gray-700">
                                         {person.class}
                                     </td>
-                                    <td className="    py-3.5 border text-center text-lg font-bold">
+                                    <td className="py-3.5 border text-center text-lg font-bold">
                                         <button
                                             type="button"
                                             className="rounded-md bg-black px-3 py-2 leading-7 text-white hover:bg-black/80"
+                                            onClick={() => {
+                                                setAdmnoToCreateId(person.admno)
+                                            }}
                                         ><ArrowRight size={16} />
                                         </button>
                                     </td>
@@ -140,7 +152,7 @@ function NewUser () {
                         type="button"
                         className="rounded-md bg-black px-3 py-2 text-2xl font-bold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                         onClick={() => {
-                            setFetchData(true);
+                            setrenderStudentList(true);
                         }}
                     >
                         Search
@@ -149,6 +161,8 @@ function NewUser () {
             </div>
         </div>
     )
+
+
 }
 
 export default NewUser;
