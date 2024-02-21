@@ -10,4 +10,4 @@ const connection = createConnection({
 function sendQueryString (query) {
     const queryString = query;
 }
-export default connection;
+export default connection; 
