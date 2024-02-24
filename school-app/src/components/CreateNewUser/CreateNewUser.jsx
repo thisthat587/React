@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { ArrowRight, User } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { getAdmno, getMobileNo } from '../../../global';
@@ -93,6 +93,7 @@ export default function createNewUser () {
                                         placeholder="Enter UserID"
                                         id="userid"
                                         ref={user}
+                                        readOnly
                                     ></input>
                                 </div>
                             </div>
@@ -132,7 +133,7 @@ export default function createNewUser () {
                                 </NavLink> */}
                                 <NavLink to="/" onClick={() => {
                                     if (isVerified) {
-                                        alert("Account Created");
+                                        alert("Account Created" + "\nUser ID : " + user.current.value + "\nPIN : " + pin.current.value);
                                     } else {
                                         alert("Please Verify OTP first");
                                     }
@@ -146,7 +147,7 @@ export default function createNewUser () {
                                             insertValue()
                                         }}
                                     >
-                                        Create User <ArrowRight className="ml-2" size={16} />
+                                        Set PIN <ArrowRight className="ml-2" size={16} />
                                     </button>
                                 </NavLink>
                             </div>

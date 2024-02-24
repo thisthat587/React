@@ -2,13 +2,24 @@ import React from "react"
 import { useRef } from "react"
 
 import { NavLink } from "react-router-dom"
-import { setMobileNo } from "../../../global";
+import { setAdmnoList, setMobileNo } from "../../../global";
 
 export default function NewUser () {
 
     const mob = useRef();
 
-    
+    const makeAdmnoList = async () => {
+        const mobile = mob.current.value;
+        const response = await fetch('http://localhost:8081/studentList');
+        const result = await response.json();
+        const list = []
+        result.map((each) => {
+            if (each.fmob === mobile) {
+                list.push(each.admno);
+            }
+        })
+        setAdmnoList(list);
+    }
 
     return (
         <div className="flex items-center justify-center bg-white m-44 rounded-lg ">
@@ -20,7 +31,7 @@ export default function NewUser () {
                 <div>
                     <input
                         type="text"
-                        className=" border ml-16 p-2 rounded-lg "
+                        className=" border ml-16 p-2 rounded-lg"
                         placeholder="Mobile No."
                         ref={mob}
                     />
@@ -32,6 +43,7 @@ export default function NewUser () {
                             className="ml-32 py-1 mt-2 w-[120px] bg-blue-500 hover:bg-blue-400 text-2xl rounded"
                             onClick={() => {
                                 setMobileNo(mob.current.value);
+                                makeAdmnoList();
                             }}
                         >
                             Search

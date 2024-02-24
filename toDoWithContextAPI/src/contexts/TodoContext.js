@@ -19,4 +19,6 @@ export const useTodo = () => {
     return useContext(TodoContext);
 }
 
+// useTodo is the custom hook which is using useContext hook and it is legal to use hook in the custom hook.
+
 export const TodoProvider = TodoContext.Provider

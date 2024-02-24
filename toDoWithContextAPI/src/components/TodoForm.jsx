@@ -16,6 +16,8 @@ function TodoForm () {
         addTodo({todo:todo, completed: false})
         setTodo("")
     }
+
+    
     return (
         <form onSubmit={add} className="flex">
             <input

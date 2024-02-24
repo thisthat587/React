@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Edit2Icon, FileAxis3D, Save } from 'lucide-react'
 import { getAdmno } from '../../../global';
+import { NavLink } from 'react-router-dom';
+import ProfilePhotoInput from '../profilePhotoInput/ProfilePhotoInput';
 // import { format } from 'mysql2';
 
 export default function Profile () {
@@ -62,10 +64,6 @@ export default function Profile () {
     useEffect(() => {
         getStdData();
 
-        // setTimeout(() => {
-        //     setIsLoading(false);
-        // }, 3000);
-
     }, [])
 
     return (
@@ -77,11 +75,12 @@ export default function Profile () {
             ) : (
                 <div className="w-[700px] bg-slate-300  mb-auto ml-auto mr-auto rounded-md border">
                     <div className=' bg-blue-500 flex justify-center items-center'>
-                        <img
+                        {/* <img
                             className="p-2 h-[150px] w-[150px]  rounded-full object-cover"
                             src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsb2d8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
                             alt="Image"
-                        />
+                        /> */}
+                        <ProfilePhotoInput />
                     </div>
                     <div className="p-4">
                         <h1 className="text-2xl text-center w-full bg-blue-500 text-white font-semibold">Profile</h1>
@@ -218,12 +217,14 @@ export default function Profile () {
                                 </tr>
                             </tbody>
                         </table>
-                        <button
-                            type="button"
-                            className="mt-4 w-full rounded-lg bg-blue-700  py-2 text-[20px] font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                        >
-                            Pay Now
-                        </button>
+                        <NavLink to="/dashboard">
+                            <button
+                                type="button"
+                                className="mt-4 w-full rounded-lg bg-blue-700  py-2 text-[20px] font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                            >
+                                Back to Dashboard
+                            </button>
+                        </NavLink>
                     </div>
                 </div>
             )}

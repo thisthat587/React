@@ -4,9 +4,12 @@ import { ArrowRight } from "lucide-react";
 import { getMobileNo, setAdmno } from "../../../global";
 function StudentsList () {
 
+    let i = 0;
     const [data, setData] = useState([]);
-    
+
     const [isLoading, setIsLoading] = useState(true);
+
+    const [statusCheckingData, setStatusCheckingData] = useState([]);
 
     const getStdData = async () => {
         const mob = getMobileNo();
@@ -18,17 +21,38 @@ function StudentsList () {
                 details.push(each);
             }
         });
-        setData(details);
-        if (data) {
-            setIsLoading(false);
-        }
-        return;
+
+        return details;
+    }
+
+    const getStaus = async () => {
+        const mob = getMobileNo();
+        const response = await fetch('http://localhost:8081/loginDetails')
+        const result = await response.json();
+        const statusValue = [];
+        result.forEach(each => {
+            if (each.uid === mob) {
+                statusValue.push({ admno: each.admno, status: each.status });
+            }
+        });
+
+        return statusValue;
     }
 
 
     useEffect(() => {
-        getStdData();
+        getStdData().then(result => {
+            setData(result);
+            if (data) {
+                setIsLoading(false);
+            }
+        });
+
+        getStaus().then(result => {
+            setStatusCheckingData(result)
+        });
     }, [])
+
     return (
         <>
             {isLoading ? (<div className="flex items-center justify-center mt-96">
@@ -108,7 +132,6 @@ function StudentsList () {
                                                     <td className="whitespace-nowrap px-12 py-4">
                                                         <div className="text-lg text-left text-gray-900 ">{person.fmob}</div>
                                                     </td>
-
 
                                                     <td className="whitespace-nowrap px-4 py-4 text-right text-sm font-medium">
                                                         <NavLink to="/createNewUser">

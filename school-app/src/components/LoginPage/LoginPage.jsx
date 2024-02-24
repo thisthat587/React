@@ -1,21 +1,23 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { verifyLoginDetails } from '../logicFiles/loginVerification';
+import { setAdmno } from '../../../global';
 
 export default function LoginPage () {
 
     const enteredUserID = useRef();
     const enteredPin = useRef();
     const [isVerified, setIsVerified] = useState(false);
-    const navigate = useNavigate('');
-    // const handleRoute = () => {
-    //     if (isVerified === true) {
-    //         navigate('/dashboard');
-    //     } else {
-    //         navigate('/');
-    //     }
+
+
+    // const verify = async () => {
+    //     await verifyLoginDetails(enteredUserID.current.value, enteredPin.current.value)
     // }
+
+    useEffect(() => {
+        setAdmno('')
+    })
 
     return (
         <div className="flex items-center justify-center bg-white m-44 rounded-lg ">
@@ -43,12 +45,6 @@ export default function LoginPage () {
                     >
                         Sign In
                     </NavLink>
-                    {/* <a
-                        href="#"
-                        title=""
-                    >
-                        Sign In
-                    </a> */}
                 </p>
                 <form action="#" method="POST" className="mt-8">
                     <div className="space-y-5">
@@ -84,24 +80,6 @@ export default function LoginPage () {
                         </div>
 
                         <div>
-
-                            {/* <NavLink to="/dashboard"> */}
-                            {/* <button
-                                type="button"
-                                className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
-                                onClick={() => {
-                                    const isValid = verifyLoginDetails(enteredUserID.current.value, enteredPin.current.value)
-                                    if (isValid === true) {
-                                        setIsVerified(true);
-                                        console.log("hello");
-                                        handleRoute();
-                                    }
-                                    // verifyLoginDetails(enteredUserID.current.value, enteredPin.current.value);
-                                }}
-                            >
-                                Get Started <ArrowRight className="ml-2" size={16} />
-                            </button> */}
-                            {/* </NavLink> */}
                             {isVerified ? (
                                 <NavLink to="/dashboard">
                                     <button
@@ -126,6 +104,17 @@ export default function LoginPage () {
                             )}
 
                         </div>
+                        {/* <div>
+                            <NavLink to="/dashboard">
+                                <button
+                                    type="button"
+                                    className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
+                                    onClick={verify}
+                                >
+                                    Get Started
+                                </button>
+                            </NavLink>
+                        </div> */}
                     </div>
                 </form>
 
