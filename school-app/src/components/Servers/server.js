@@ -34,6 +34,25 @@ app.post('/getQuery', (request, response) => {
 
 });
 
+app.post('/updateName', (request, response) => {
+
+    const dataFromBody = [request.body.name, request.body.admno];
+
+    const queryString = `UPDATE tbl_admission SET name = '${dataFromBody[0]}' WHERE admno = '${dataFromBody[1]}';`
+    connection.query(queryString);
+
+});
+
+app.post('/updatefName', (request, response) => {
+
+    const dataFromBody = [request.body.fname, request.body.admno];
+
+    const queryString = `UPDATE tbl_admission SET fname = '${dataFromBody[0]}' WHERE admno = '${dataFromBody[1]}';`
+    connection.query(queryString);
+
+});
+
+
 app.get('/transportFee', (request, response) => {
     const queryString = `select admno, transportfee from tbl_stdfeemaster where session = '2023-2024'`
     connection.query(queryString, (error, result) => {

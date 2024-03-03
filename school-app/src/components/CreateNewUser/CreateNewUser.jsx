@@ -19,17 +19,15 @@ export default function createNewUser () {
     const [mob, setMob] = useState(getMobileNo());
 
     const [isVerified, setIsVerified] = useState(false);
-
     const insertValue = () => {
         const userID = user.current.value;
         const PIN = pin.current.value;
-
         const data = {
             admno: admno,
             userID: userID,
             PIN: PIN
         };
-        fetch('http://localhost:8081/getQuery', {
+        fetch('http://89.117.188.154:8081/getQuery', {
             method: 'POST',                           //|
             headers: {                                //|  
                 'Content-Type': 'application/json',     //| (request body to send to the server)

@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ArrowRight } from 'lucide-react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { verifyLoginDetails } from '../logicFiles/loginVerification';
 import { setAdmno } from '../../../global';
 
-export default function LoginPage () {
+export default function LoginPage() {
 
     const enteredUserID = useRef();
     const enteredPin = useRef();
@@ -46,7 +46,7 @@ export default function LoginPage () {
                         Sign In
                     </NavLink>
                 </p>
-                <form action="#" method="POST" className="mt-8">
+                <form className="mt-8" onSubmit={(e) => e.preventDefault()}>
                     <div className="space-y-5">
                         <div>
                             <label htmlFor="name" className="text-base font-medium text-gray-900">
@@ -80,41 +80,18 @@ export default function LoginPage () {
                         </div>
 
                         <div>
-                            {isVerified ? (
-                                <NavLink to="/dashboard">
-                                    <button
-                                        type="button"
-                                        className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
-                                    >
-                                        Get Started <ArrowRight className="ml-2" size={16} />
-                                    </button>
-                                </NavLink>
-                            ) : (
-                                <button
-                                    type="button"
-                                    className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
-                                    onClick={() => {
-                                        if (verifyLoginDetails(enteredUserID.current.value, enteredPin.current.value)) {
-                                            setIsVerified(true); // Assuming setIsVerified is a state updater function
-                                        }
-                                    }}
-                                >
-                                    Get Started
-                                </button>
-                            )}
-
-                        </div>
-                        {/* <div>
                             <NavLink to="/dashboard">
                                 <button
                                     type="button"
                                     className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
-                                    onClick={verify}
+                                    onClick={() => verifyLoginDetails(enteredUserID.current.value, enteredPin.current.value)}
                                 >
-                                    Get Started
+                                    Get Started <ArrowRight className="ml-2" size={16} />
                                 </button>
                             </NavLink>
-                        </div> */}
+
+                        </div>
+
                     </div>
                 </form>
 

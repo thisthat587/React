@@ -5,16 +5,18 @@ import { ArrowLeft } from 'lucide-react'
 import { getAdmno, setAdmno } from '../../../global';
 
 
-export default function Dashboard () {
+export default function Dashboard() {
     const [data, setData] = useState(null);
 
     const [isLoading, setIsLoading] = useState(true);
 
+    const [admno, setAdmno] = useState('');
+
     const getStdData = async () => {
         try {
-            const admno = getAdmno();
             const response = await fetch('http://localhost:8081/studentList');
             const result = await response.json();
+            setAdmno(getAdmno());
 
             result.forEach(each => {
                 if (each.admno === admno) {
@@ -28,14 +30,19 @@ export default function Dashboard () {
             // Handle error if needed
             setIsLoading(false); // Make sure to set loading state in case of an error
         } finally {
-            setIsLoading(false); // Make sure to set loading state in case of an error
+            // if (admno !== '') {
+            setTimeout(() => {
+
+                setIsLoading(false); // Make sure to set loading state in case of an error
+            }, 5000);
+            // }
 
         }
     };
 
     useEffect(() => {
         getStdData();
-    }, []);
+    }, [admno]);
 
 
 
@@ -90,7 +97,7 @@ export default function Dashboard () {
                                         <label className=' bg-transparent py-2 mr-2 text-xl'  >Name  </label>
                                     </td>
                                     <td className='w-full border px-10'>
-                                        <input className=' rounded-lg py-2 text-xl text-center' type="text" value={data.name} readOnly />
+                                        <input className=' rounded-lg py-2 px-4 text-xl text-center' type="text" value={data.name} readOnly />
                                     </td>
                                 </tr>
                                 <tr >
@@ -98,7 +105,7 @@ export default function Dashboard () {
                                         <label className=' bg-transparent py-2 mr-2 text-xl'  >Father's Name  </label>
                                     </td>
                                     <td className='w-full border px-10'>
-                                        <input className=' rounded-lg py-2 text-xl text-center' type="text" value={data.fname} readOnly />
+                                        <input className=' rounded-lg py-2 text-xl px-4 text-center' type="text" value={data.fname} readOnly />
                                     </td>
                                 </tr>
                                 <tr >
@@ -106,7 +113,7 @@ export default function Dashboard () {
                                         <label className=' bg-transparent py-2 mr-2 text-xl'  >Admission No.  </label>
                                     </td>
                                     <td className='w-full border px-10'>
-                                        <input className=' rounded-lg py-2 text-xl text-center' type="text" value={data.admno} readOnly />
+                                        <input className=' rounded-lg py-2 text-xl px-4 text-center' type="text" value={data.admno} readOnly />
                                     </td>
                                 </tr>
                                 <tr >
@@ -114,7 +121,7 @@ export default function Dashboard () {
                                         <label className=' bg-transparent py-2 mr-2 text-xl'  >Session  </label>
                                     </td>
                                     <td className='w-full border px-10'>
-                                        <input className=' rounded-lg py-2 text-xl text-center' type="text" value={data.session} readOnly />
+                                        <input className=' rounded-lg py-2 text-xl px-4 text-center' type="text" value={data.session} readOnly />
                                     </td>
                                 </tr>
                             </tbody>

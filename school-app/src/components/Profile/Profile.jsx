@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { Edit2Icon, FileAxis3D, Save } from 'lucide-react'
+import React, { useEffect, useRef, useState } from 'react'
+import { Check, Edit2Icon, FileAxis3D, Save } from 'lucide-react'
 import { getAdmno } from '../../../global';
 import { NavLink } from 'react-router-dom';
 import ProfilePhotoInput from '../profilePhotoInput/ProfilePhotoInput';
 // import { format } from 'mysql2';
 
-export default function Profile () {
+export default function Profile() {
+
+    const name = useRef();
+    const fname = useRef();
+
     const [data, setData] = useState({});
 
     const [transFee, setTransFee] = useState('');
@@ -14,6 +18,10 @@ export default function Profile () {
 
     const [isLoading, setIsLoading] = useState(true);
 
+    const [isNameEditable, setIsNameEditable] = useState(false);
+    const [isfNameEditable, setIsfNameEditable] = useState(false);
+
+
     const getStdData = async () => {
         const admno = getAdmno();
         const response = await fetch('http://localhost:8081/studentList')
@@ -21,11 +29,13 @@ export default function Profile () {
         result.forEach(each => {
             if (each.admno === admno) {
                 setData(each);
+
                 if (data) {
                     setTimeout(() => {
                         setIsLoading(false);
                     }, 1000);
                 }
+                console.log(data);
                 return;
             }
         });
@@ -61,9 +71,66 @@ export default function Profile () {
 
     }
 
+    const changeName = () => {
+        setIsNameEditable(!isNameEditable);
+        document.getElementById('name').focus();
+
+        const stdName = name.current.value;
+
+        const nameData = {
+            name: stdName,
+            admno: data.admno
+        };
+
+        fetch('http://localhost:8081/updateName', {
+            method: 'POST',                           //|
+            headers: {                                //|  
+                'Content-Type': 'application/json',     //| (request body to send to the server)
+            },                                        //|
+            body: JSON.stringify(nameData),               //|
+        })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Data inserted successfully:', result);
+                // You can perform additional actions after successful insertion
+            })
+            .catch(error => {
+                console.error('Error inserting data:', error);
+                // Handle the error appropriately
+            });
+    }
+
+    const changefName = () => {
+        setIsfNameEditable(!isfNameEditable);
+        document.getElementById('fname').focus();
+
+        const stdfName = fname.current.value;
+
+        const fNameData = {
+            fname: stdfName,
+            admno: data.admno,
+        };
+        fetch('http://localhost:8081/updatefName', {
+            method: 'POST',                           //|
+            headers: {                                //|  
+                'Content-Type': 'application/json',     //| (request body to send to the server)
+            },                                        //|
+            body: JSON.stringify(fNameData),               //|
+        })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Data inserted successfully:', result);
+                // You can perform additional actions after successful insertion
+            })
+            .catch(error => {
+                console.error('Error inserting data:', error);
+                // Handle the error appropriately
+            });
+    }
+
+
     useEffect(() => {
         getStdData();
-
     }, [])
 
     return (
@@ -93,44 +160,84 @@ export default function Profile () {
                                         <label className=' bg-transparent py-2 mr-2 text-xl' htmlFor="name">Name</label>
                                     </td>
 
-                                    <td className='w-full border px-10'>
-                                        <input className=' rounded-lg py-2 text-xl text-center' id="name" type="text" value={data.name} readOnly={true}
+                                    {isNameEditable ? (<td className='w-full border px-10'>
+                                        <input
+                                            className=' rounded-lg py-2 px-4 text-xl text-center'
+                                            id="name"
+                                            type="text"
+                                            ref={name}
+                                            value={data.name}
+                                            onChange={(e) => setData({ ...data, name: e.target.value })}
                                         />
-                                    </td>
-                                    <td className=' px-2 border'>
-                                        <Edit2Icon
+                                    </td>) : (<td className='w-full border px-10'>
+                                        <input className=' rounded-lg py-2 px-4 text-xl text-center' ref={name} id="name" type="text" value={data.name} readOnly={true}
+                                        />
+                                    </td>)}
+
+                                    {isNameEditable ? (<td className=' px-2 border'>
+                                        <Check
                                             className='hover:bg-blue-400 bg-blue-500 rounded-lg size-8 text-white'
                                             style={{ padding: '4px' }}
+                                            onClick={changeName}
                                         />
-                                    </td>
+                                    </td>) :
+                                        (<td className=' px-2 border'>
+                                            <Edit2Icon
+                                                className='hover:bg-blue-400 bg-blue-500 rounded-lg size-8 text-white'
+                                                style={{ padding: '4px' }}
+                                                onClick={changeName}
+                                            />
+                                        </td>)
+                                    }
                                 </tr>
                                 <tr >
                                     <td className='w-full border px-10'>
                                         <label className=' bg-transparent py-2 mr-2 text-xl' htmlFor="name">Father's Name</label>
                                     </td>
 
-                                    <td className='w-full border px-10'>
-                                        <input className=' rounded-lg py-2 text-xl text-center' type="text" value={data.fname} readOnly />
-                                    </td>
-                                    <td className=' px-2 border'>
+                                    {isfNameEditable ? (<td className='w-full border px-10'>
+                                        <input
+                                            className=' rounded-lg py-2 px-4 text-xl text-center'
+                                            type="text"
+                                            id="fname"
+                                            ref={fname}
+                                            value={data.fname}
+                                            onChange={(e) => setData({ ...data, fname: e.target.value })}
+                                            autoFocus={isfNameEditable}
+                                        />
+                                    </td>)
+                                        : (<td className='w-full border px-10'>
+                                            <input className=' rounded-lg py-2 px-4 text-xl text-center' ref={fname} id="fname"
+                                                type="text" value={data.fname} readOnly />
+                                        </td>)}
+                                    {isfNameEditable ? (<td className=' px-2 border'>
+                                        <Check className='hover:bg-blue-400 bg-blue-500 rounded-lg size-8 text-white'
+                                            style={{ padding: '4px' }}
+                                            onClick={changefName}
+
+                                        />
+                                    </td>) : (<td className=' px-2 border'>
                                         <Edit2Icon className='hover:bg-blue-400 bg-blue-500 rounded-lg size-8 text-white'
                                             style={{ padding: '4px' }}
+                                            onClick={changefName}
+
                                         />
-                                    </td>
+                                    </td>)}
+
                                 </tr>
-                                <tr >
+                                <tr>
                                     <td className='w-full border px-10'>
                                         <label className=' bg-transparent py-2 mr-2 text-xl' htmlFor="name">Mobile  </label>
                                     </td>
 
-                                    <td className='w-full border px-10'>
-                                        <input className=' rounded-lg py-2 text-xl text-center' type="text" value={data.fmob} readOnly />
+                                    <td className='w-full px-10'>
+                                        <input className=' rounded-lg py-2 px-4 text-xl text-center' type="text" value={data.fmob} readOnly />
                                     </td>
-                                    <td className=' px-2 border'>
+                                    {/* <td className=' px-2 border'>
                                         <Edit2Icon className=' hover:bg-blue-400 bg-blue-500 rounded-lg size-8 text-white'
                                             style={{ padding: '4px' }}
                                         />
-                                    </td>
+                                    </td> */}
                                 </tr>
                             </tbody>
 

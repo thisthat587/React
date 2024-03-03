@@ -1,6 +1,6 @@
 let mobileNo = '';
 
-let admno = '';
+let admno = null;
 
 let admnoList = []
 
