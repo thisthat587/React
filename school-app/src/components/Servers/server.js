@@ -1,9 +1,10 @@
-import express, { request, response } from 'express';
+import express from 'express';
 import cors from 'cors';
 import connection from '../../../db.js';
 
 
 const app = express();
+// app.use(express.static('dist'));
 app.use(cors())
 app.use(express.json())
 
@@ -68,5 +69,5 @@ app.get('/destination', (request, response) => {
 })
 
 app.listen(8081, () => {
-    console.log("listening");
+    console.log(`serve at http://localhost:8081`);
 })

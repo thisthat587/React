@@ -4,7 +4,7 @@ import { useTodo } from '../contexts/TodoContext'
 
 function TodoForm () {
 
-    const [todo, setTodo] = useState("")
+    const [todo, setTodo] = useState("") 
 
     const {addTodo} = useTodo()
 
